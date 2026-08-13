@@ -65,7 +65,7 @@ TABLE = {
     },
     "vitamins": {
         "vitamin_a_retinol": 30.0000,
-        "vitamin_d": 0.250000,
+        "vitamin_d3_cholecalciferol": 0.250000,
     },
     "others": {
         "cholesterol": 570.000,

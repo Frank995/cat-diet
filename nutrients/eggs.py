@@ -135,7 +135,7 @@ TABLE = {
         "vitamin_b2_riboflavin": 0.469400,
         "vitamin_b3_niacin": 0.0785502,
         "vitamin_b5_pantothenic_acid": 1.12335,
-        "vitamin_b6": 0.119727,
+        "vitamin_b6_pyridoxine": 0.119727,
         "vitamin_b9_folate": 0.0513333,
         "vitamin_b12_cobalamin": 0.000707665,
         "vitamin_d3_cholecalciferol": 0.00180392,
