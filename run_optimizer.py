@@ -30,8 +30,8 @@ from dataclasses import dataclass
 
 import pulp
 
-from nutrients import (
-    TABLES,
+from nutrients import *
+from utils import (
     apply_cooking_degradation,
     combine_nutrition,
     energy_kcal,
@@ -123,7 +123,7 @@ ALGAL_OIL_TABLE = {
     "water": 0.0,
 }
 
-EGGSHELL_TABLE = copy.deepcopy(TABLES["eggshells"])
+EGGSHELL_TABLE = copy.deepcopy(EGGS_TABLE)
 if IGNORE_EGGSHELL_CARBS:
     EGGSHELL_TABLE["carbs"] = {"fibers": {"others": 0.0}, "others": 0.0}
 
@@ -286,20 +286,20 @@ class Ingredient:
 
 INGREDIENTS = {
     # insect meal (cooked)
-    "bsfl": Ingredient("bsfl", "BSFL flour", TABLES["bsfl"], cooked=True),
-    "mealworms": Ingredient("mealworms", "mealworm flour", TABLES["mealworms"], cooked=True),
-    "eggs_cooked": Ingredient("eggs_cooked", "whole egg (cooked)", TABLES["eggs"], cooked=True),
+    "bsfl": Ingredient("bsfl", "BSFL flour", BSFL_TABLE, cooked=True),
+    "mealworms": Ingredient("mealworms", "mealworm flour", MEALWORMS_TABLE, cooked=True),
+    "eggs_cooked": Ingredient("eggs_cooked", "whole egg (cooked)", EGGS_TABLE, cooked=True),
     "water_insect": Ingredient("water_insect", "water (cooked off)", WATER_TABLE, cooked=True),
     # fish meal (raw)
-    "cod": Ingredient("cod", "wild cod", TABLES["cod"]),
-    "mussels": Ingredient("mussels", "blue mussels", TABLES["mussels"]),
-    "cod_roe": Ingredient("cod_roe", "cod roe", TABLES["cod_roe"]),
-    "eggs_raw": Ingredient("eggs_raw", "whole egg (raw)", TABLES["eggs"]),
+    "cod": Ingredient("cod", "wild cod", COD_TABLE),
+    "mussels": Ingredient("mussels", "blue mussels", MUSSELS_TABLE),
+    "cod_roe": Ingredient("cod_roe", "cod roe", COD_ROE_TABLE),
+    "eggs_raw": Ingredient("eggs_raw", "whole egg (raw)", EGGS_TABLE),
     "water_fish": Ingredient("water_fish", "water", WATER_TABLE),
     # powders / oils, added to any meal after cooking
     "eggshells": Ingredient("eggshells", "eggshell powder", EGGSHELL_TABLE),
-    "yeast": Ingredient("yeast", "nutritional yeast", TABLES["yeast"]),
-    "cod_liver_oil": Ingredient("cod_liver_oil", "cod liver oil", TABLES["cod_liver_oil"]),
+    "yeast": Ingredient("yeast", "nutritional yeast", YEAST_TABLE),
+    "cod_liver_oil": Ingredient("cod_liver_oil", "cod liver oil", COD_LIVER_OIL_TABLE),
     "algal_oil": Ingredient("algal_oil", "algal EPA/DHA oil", ALGAL_OIL_TABLE),
     "taurine": Ingredient("taurine", "taurine powder", TAURINE_TABLE),
 }
@@ -455,17 +455,17 @@ def build_meals(result: dict) -> tuple[dict, dict, dict]:
 
     supplements = [
         scale_to_grams(EGGSHELL_TABLE, sol["eggshells"]),
-        scale_to_grams(TABLES["yeast"], sol["yeast"]),
+        scale_to_grams(YEAST_TABLE, sol["yeast"]),
         scale_to_grams(ALGAL_OIL_TABLE, sol["algal_oil"]),
         scale_to_grams(TAURINE_TABLE, sol["taurine"]),
     ]
-    liver_oil = scale_to_grams(TABLES["cod_liver_oil"], sol["cod_liver_oil"])
+    liver_oil = scale_to_grams(COD_LIVER_OIL_TABLE, sol["cod_liver_oil"])
 
     insect_cooked = apply_cooking_degradation(
         combine_nutrition(
-            scale_to_grams(TABLES["bsfl"], sol["bsfl"]),
-            scale_to_grams(TABLES["mealworms"], sol["mealworms"]),
-            scale_to_grams(TABLES["eggs"], egg_ins_day),
+            scale_to_grams(BSFL_TABLE, sol["bsfl"]),
+            scale_to_grams(MEALWORMS_TABLE, sol["mealworms"]),
+            scale_to_grams(EGGS_TABLE, egg_ins_day),
             scale_to_grams(WATER_TABLE, sol["water_insect"]),
         ),
         water_loss_rate=WATER_LOSS,
@@ -474,10 +474,10 @@ def build_meals(result: dict) -> tuple[dict, dict, dict]:
                                     *( [liver_oil] if result["liver_oil_everyday"] else [] ))
 
     fish_meal = combine_nutrition(
-        scale_to_grams(TABLES["cod"], sol["cod"]),
-        scale_to_grams(TABLES["mussels"], sol["mussels"]),
-        scale_to_grams(TABLES["cod_roe"], sol["cod_roe"]),
-        scale_to_grams(TABLES["eggs"], egg_fish_day),
+        scale_to_grams(COD_TABLE, sol["cod"]),
+        scale_to_grams(MUSSELS_TABLE, sol["mussels"]),
+        scale_to_grams(COD_ROE_TABLE, sol["cod_roe"]),
+        scale_to_grams(EGGS_TABLE, egg_fish_day),
         scale_to_grams(WATER_TABLE, sol["water_fish"]),
         liver_oil, *supplements,
     )

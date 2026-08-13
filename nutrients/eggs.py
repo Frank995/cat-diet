@@ -113,14 +113,7 @@ TABLE = {
         "others": 1050.50,
     },
     "carbs": {
-        "sugars": {
-            "fructose": 0.0600119,
-            "galactose": 0.0600119,
-            "glucose": 0.281046,
-            "lactose": 0.0600119,
-            "maltose": 0.0600119,
-            "sucrose": 0.0600119,
-        },
+        "sugars": 0.5811055,
         "fibers": {
             "others": 0.000000,
         },
