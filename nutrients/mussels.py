@@ -103,10 +103,10 @@ TABLE = {
         "vitamin_c_ascorbic_acid": 8.00000,
         "vitamin_e_alpha_tocopherol": 0.546667,
         "vitamin_e_gamma_tocopherol": 0.0200000,
+        "vitamin_j_choline": 65.0000,
         "vitamin_k1_phylloquinone": 0.0000666667,
     },
     "others": {
-        "choline": 65.0000,
         "cholesterol": 28.0000,
     },
     "water": 80.5800,

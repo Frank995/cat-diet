@@ -207,7 +207,6 @@ RETENTION = {
 PROTEIN_TIERS = {
     "lysine": "low",
     "cysteine": "low",
-    "cysteine": "low",
     "methionine": "low",
     "tryptophan": "low",
 }
@@ -233,6 +232,7 @@ VITAMIN_TIERS = {
     "vitamin_e_gamma_tocopherol": "moderate",
     "vitamin_e_delta_tocopherol": "moderate",
     "vitamin_e_alpha_tocotrienol": "moderate",
+    "vitamin_j_choline": "low",
     "vitamin_k1_phylloquinone": "minimal",
 }
 
@@ -242,7 +242,6 @@ OTHERS_TIERS = {
     "beta_alanine": "low",
     "1_methylhistidine": "low",
     "betaine": "low",
-    "choline": "low",
     "total_nitrogen": "minimal",
     "ammonia_nitrogen": "low",
     # lipids / lipid-soluble

@@ -441,11 +441,11 @@ NUTRIENTS: list[Spec] = [
         group="vitamins",
     ),
     Spec(
-        "vitamin_b6",
+        "vitamin_b6_pyridoxine",
         "vitamin B6",
         "mg",
         0.79 * SCALE,
-        vitamin("vitamin_b6"),
+        vitamin("vitamin_b6_pyridoxine"),
         group="vitamins",
     ),
     Spec(
@@ -931,6 +931,9 @@ def solve(fish_days: int, liver_oil_everyday: bool) -> dict | None:
     )
 
     prob.solve(pulp.PULP_CBC_CMD(msg=False))
+    for name, c in prob.constraints.items():
+        if abs(c.value()) < 1e-6:          # residual == 0
+            print(f"BINDING  {name:<32} shadow price {getattr(c, 'pi', None)}")
     if pulp.LpStatus[prob.status] != "Optimal":
         return {
             "status": pulp.LpStatus[prob.status],

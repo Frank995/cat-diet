@@ -137,11 +137,11 @@ TABLE = {
         "vitamin_e_gamma_tocopherol": 0.450980,
         "vitamin_e_delta_tocopherol": 0.0196078,
         "vitamin_e_alpha_tocotrienol": 0.0196078,
+        "vitamin_j_choline": 274.141,
         "vitamin_k1_phylloquinone": 0.000196078,
     },
     "others": {
         "cholesterol": 361.667,
-        "choline": 274.141,
         "betaine": 0.594177,
         "lutein_zeaxanthin": 0.364667,
     },
