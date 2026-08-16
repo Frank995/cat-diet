@@ -159,7 +159,7 @@ OVER_FACTOR = {
     "vitamin_b1_thiamin": 8.0,
     "vitamin_b2_riboflavin": 8.0,
     "vitamin_b5_pantothenic_acid": 8.0,
-    "vitamin_b6": 8.0,
+    "vitamin_b6_pyridoxine": 8.0,
     "vitamin_b9_folate": 8.0,
     "vitamin_b12_cobalamin": 20.0,
     "vitamin_c_ascorbic_acid": 10.0,
@@ -536,10 +536,10 @@ NUTRIENTS: list[Spec] = [
     ),
     Spec(
         "cysteine",
-        "cysteine + cystine",
+        "cysteine",
         "mg",
         541.57 * SCALE,
-        amino("cysteine", "cystine"),
+        amino("cysteine"),
         group="amino acids",
     ),
     Spec(

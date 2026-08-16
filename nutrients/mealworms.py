@@ -48,7 +48,7 @@ TABLE = {
         "alanine": 3.46750,
         "arginine": 3.08598,
         "aspartic_acid": 3.80250,
-        "cystine": 0.332500,
+        "cysteine": 0.332500,
         "glutamic_acid": 5.56750,
         "glycine": 2.59250,
         "histidine": 1.69750,

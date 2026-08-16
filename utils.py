@@ -207,7 +207,7 @@ RETENTION = {
 PROTEIN_TIERS = {
     "lysine": "low",
     "cysteine": "low",
-    "cystine": "low",
+    "cysteine": "low",
     "methionine": "low",
     "tryptophan": "low",
 }

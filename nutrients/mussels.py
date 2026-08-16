@@ -12,7 +12,7 @@ Units:
 
 Notes:
 - The amino acids plus proteins.others reconcile exactly with the reported
-  total protein (11.9 g). The sulphur amino acid is reported as cystine.
+  total protein (11.9 g). The sulphur amino acid is reported as cysteine.
 - Fatty acids reported as zero (C4:0-C12:0) are omitted. fats.others
   (0.713 g) is the unresolved remainder of total fat (2.24 g).
 - C18:1, C18:2, C18:3, C18:4, C20:1, C20:4 and C22:1 are reported as
@@ -32,7 +32,7 @@ TABLE = {
         "alanine": 0.720000,
         "arginine": 0.868000,
         "aspartic_acid": 1.14800,
-        "cystine": 0.156000,
+        "cysteine": 0.156000,
         "glutamic_acid": 1.61800,
         "glycine": 0.744000,
         "histidine": 0.228000,

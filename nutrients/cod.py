@@ -14,7 +14,7 @@ Units:
 
 Notes:
 - The two sources report the sulphur amino acids differently (Jensen:
-  cysteine; NutritionValue: cystine). Both are retained as reported, since
+  cysteine; NutritionValue: cysteine). Both are retained as reported, since
   together with the other amino acids and proteins.others they reconcile
   exactly with the averaged total protein (17.4809 g).
 - Fatty acids reported as zero (C4:0-C12:0) are omitted. fats.others
@@ -37,7 +37,7 @@ TABLE = {
         "arginine": 1.11794,
         "aspartic_acid": 1.59926,
         "cysteine": 0.0950000,
-        "cystine": 0.190588,
+        "cysteine": 0.190588,
         "glutamic_acid": 2.79632,
         "glycine": 0.857647,
         "histidine": 0.434265,
