@@ -259,21 +259,6 @@ WATER_TABLE = {"water": 100.0}
 
 TAURINE_TABLE = {"others": {"taurine": 100_000.0}, "water": 0.0}
 
-# PLACEHOLDER - replace with your actual algal-oil label (per 100 g of oil).
-ALGAL_OIL_TABLE = {
-    "fats": {
-        "saturated": {"myristic_acid_C14_0": 5.0, "palmitic_acid_C16_0": 25.0},
-        "monounsaturated": {"oleic_acid_C18_1_n9": 8.0},
-        "polyunsaturated": {
-            "eicosapentaenoic_acid_C20_5_n3": 10.0,
-            "docosapentaenoic_acid_C22_5_n3": 5.0,
-            "docosahexaenoic_acid_C22_6_n3": 40.0,
-        },
-        "others": 7.0,
-    },
-    "water": 0.0,
-}
-
 EGGSHELL_TABLE = copy.deepcopy(EGGSHELLS_TABLE)
 
 
