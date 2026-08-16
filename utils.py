@@ -79,7 +79,9 @@ def smart_round(value: float, sig: int = 6) -> float:
     return float(f"{value:.{sig}g}")
 
 
-def _map_leaves(node: Any, fn: Callable[[float, tuple], float], path: tuple = ()) -> Any:
+def _map_leaves(
+    node: Any, fn: Callable[[float, tuple], float], path: tuple = ()
+) -> Any:
     """Recursively rebuild `node`, applying `fn(value, path)` to every number."""
     if isinstance(node, Mapping):
         return {k: _map_leaves(v, fn, path + (k,)) for k, v in node.items()}
@@ -167,7 +169,7 @@ def summary(table: Mapping, sig: int = 6) -> dict:
         "carbs": carbs_all,
         "sugars": sugars,
         "fibers": fibers,
-        "nfe": carbs_all - fibers,          # nitrogen-free extract
+        "nfe": carbs_all - fibers,  # nitrogen-free extract
         "ashes": ashes,
         "water": water,
         "weight": proteins + fats + carbs_all + ashes + water,
@@ -176,11 +178,13 @@ def summary(table: Mapping, sig: int = 6) -> dict:
     return {k: smart_round(v, sig) for k, v in out.items()}
 
 
-ATWATER_GENERAL = (4.0, 9.0, 4.0)    # human food, protein / fat / carbohydrate
-ATWATER_MODIFIED = (3.5, 8.5, 3.5)   # AAFCO modified Atwater, pet food
+ATWATER_GENERAL = (4.0, 9.0, 4.0)  # human food, protein / fat / carbohydrate
+ATWATER_MODIFIED = (3.5, 8.5, 3.5)  # AAFCO modified Atwater, pet food
 
 
-def energy_kcal(table: Mapping, factors=ATWATER_MODIFIED, include_fiber: bool = False) -> float:
+def energy_kcal(
+    table: Mapping, factors=ATWATER_MODIFIED, include_fiber: bool = False
+) -> float:
     """Metabolisable energy estimate. Fiber is excluded by default (NFE basis)."""
     s = summary(table, sig=12)
     carbs = s["carbs"] if include_fiber else s["nfe"]
@@ -193,10 +197,10 @@ def energy_kcal(table: Mapping, factors=ATWATER_MODIFIED, include_fiber: bool = 
 # --------------------------------------------------------------------------- #
 #: retention factors, named after the *loss* tier they represent
 RETENTION = {
-    "minimal": 0.960,    # ~4 % loss  (3-5 %)
-    "low": 0.910,        # ~9 % loss  (8-10 %)
-    "moderate": 0.825,   # ~17.5 % loss (15-20 %)
-    "high": 0.650,       # ~35 % loss (30-40 %)
+    "minimal": 0.960,  # ~4 % loss  (3-5 %)
+    "low": 0.910,  # ~9 % loss  (8-10 %)
+    "moderate": 0.825,  # ~17.5 % loss (15-20 %)
+    "high": 0.650,  # ~35 % loss (30-40 %)
 }
 
 # Amino acids: Maillard/oxidation-sensitive ones lose a bit more than the rest.
@@ -368,8 +372,11 @@ def apply_cooking_degradation(
 # --------------------------------------------------------------------------- #
 # ordering / validation
 # --------------------------------------------------------------------------- #
-def sort_nested_dict(d: Any, order: Mapping[tuple, list] | None = CANONICAL_ORDER,
-                     current_path: tuple = ()) -> Any:
+def sort_nested_dict(
+    d: Any,
+    order: Mapping[tuple, list] | None = CANONICAL_ORDER,
+    current_path: tuple = (),
+) -> Any:
     """Recursively order keys: custom order first, then alphabetical.
 
     `others` is always pushed to the end of its level, since it is a residual.
@@ -377,12 +384,14 @@ def sort_nested_dict(d: Any, order: Mapping[tuple, list] | None = CANONICAL_ORDE
     if not isinstance(d, Mapping):
         return d
 
-    processed = {k: sort_nested_dict(v, order, current_path + (k,)) for k, v in d.items()}
+    processed = {
+        k: sort_nested_dict(v, order, current_path + (k,)) for k, v in d.items()
+    }
 
     custom = [k for k in (order or {}).get(current_path, []) if k in processed]
     rest = sorted(k for k in processed if k not in custom)
     keys = custom + rest
-    if "others" in keys:                     # residual always last
+    if "others" in keys:  # residual always last
         keys = [k for k in keys if k != "others"] + ["others"]
     return {k: processed[k] for k in keys}
 
@@ -406,7 +415,9 @@ def validate_table(table: Mapping, name: str = "<table>") -> list[str]:
         if isinstance(node, Mapping):
             for k, v in node.items():
                 if stale.search(k):
-                    problems.append(f"{name}: leftover total/unit key '{'.'.join(path + (k,))}'")
+                    problems.append(
+                        f"{name}: leftover total/unit key '{'.'.join(path + (k,))}'"
+                    )
                 walk(v, path + (k,))
         elif isinstance(node, Number) and not isinstance(node, bool):
             if node < 0:

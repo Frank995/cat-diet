@@ -80,7 +80,6 @@ TABLE = {
     },
     "ashes": {
         "zinc": 120.0,
-
         "arsenic": 0.028,
         "cadmium": 0.089,
         "calcium": 195.0,
@@ -95,7 +94,7 @@ TABLE = {
             "others": 2.20,
         },
         "sugars": 12.0,
-        "others": 3.0, 
+        "others": 3.0,
     },
     "vitamins": {
         "vitamin_b1_thiamine": 45.0,

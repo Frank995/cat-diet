@@ -79,9 +79,6 @@ TABLE = {
         "vitamin_d3_cholecalciferol": 0.00520000,
         "vitamin_e_alpha_tocopherol": 10.3000,
     },
-    "others": {
-        "cholesterol": 323.000,
-        "salt": 300.000
-    },
+    "others": {"cholesterol": 323.000, "salt": 300.000},
     "water": 74.0000,
 }
