@@ -106,6 +106,10 @@ VIT_E_BASE_MG = 1.76 * SCALE
 # =============================================================================
 # 1b. INGREDIENT BOUNDS  (grams/day, raw as weighed)
 # =============================================================================
+
+USE_COD = False
+USE_MUSSELS = True
+
 BOUNDS = {
     # insect-day solids
     "bsfl": (0.0, 30.0),  # was 80 -> Mn/Zn/Fe bomb
@@ -124,6 +128,10 @@ BOUNDS = {
     "algal_oil": (0.0, 1.5),
     "taurine": (0.0, 0.6),
 }
+if not USE_COD:
+    BOUNDS["cod"] = (0.0, 0.0)
+if not USE_MUSSELS:
+    BOUNDS["mussels"] = (0.0, 0.0)
 EGG_BOUNDS = {"eggs_insect_week": (0, 6), "eggs_fish_week": (0, 3)}
 MAX_EGGS_WEEK = 7
 
@@ -1015,6 +1023,10 @@ def report(result: dict) -> None:
     print(
         f"WEEKLY PLAN : {S} insect days + {C} fish day(s)"
         f"   |   cod-liver oil {'every day' if result['liver_oil_everyday'] else 'fish days only'}"
+    )
+    print(
+        f"Fish sources: cod {'ON' if USE_COD else 'off'}, "
+        f"mussels {'ON' if USE_MUSSELS else 'off'}"
     )
     print(
         f"Energy anchor: {KCAL_TARGET:.0f} kcal/day target "
