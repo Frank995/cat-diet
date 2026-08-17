@@ -30,6 +30,7 @@ Notes:
     - Beta-carotene varied substantially (0.34, ~150-200, and ~250 mg/100 g) and
       was averaged to a rough midpoint (~130 mg/100 g); treat this value as
       low-confidence.
+    - Cystine converted to cysteine (x 1.0084)
 """
 
 TABLE = {
@@ -46,7 +47,7 @@ TABLE = {
         "alanine": 4.75800,
         "arginine": 4.26100,
         "aspartic_acid": 6.05300,
-        "cystine": 0.53400,
+        "cysteine": 0.5384856,
         "glutamic_acid": 7.98500,
         "glycine": 3.13300,
         "proline": 2.44100,

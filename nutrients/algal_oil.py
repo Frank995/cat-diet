@@ -37,8 +37,8 @@ TABLE = {
         "others": 0.000000,
     },
     "vitamins": {
-        "vitamin_d3_cholecalciferol": 2_173.91,
-        "vitamin_e_alpha_tocopherol": 97.1739,
+        "vitamin_d3_cholecalciferol": 0.054348,
+        "vitamin_e_alpha_tocopherol": 65.1065,
     },
     "others": {},
     "water": 0.000000,

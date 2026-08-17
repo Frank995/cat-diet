@@ -90,13 +90,13 @@ TABLE = {
         "others": 18.0,
     },
     "vitamins": {
-        "vitamin_b1_thiamine": 41.0,
+        "vitamin_b1_thiamin": 41.0,
         "vitamin_b2_riboflavin": 18.0,
         "vitamin_b3_niacin": 420.0,
         "vitamin_b5_pantothenic_acid": 140.0,
         "vitamin_b6_pyridoxine": 34.0,
         "vitamin_b7_biotin": 0.196,
-        "vitamin_b9_folic_acid": 4.1,
+        "vitamin_b9_folate": 4.1,
         "vitamin_b12_cobalamin": 0.044,
     },
     "others": {

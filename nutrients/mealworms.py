@@ -1,26 +1,18 @@
-"""
-Nutritional values of wild Atlantic cod (Gadus morhua) based on:
+"""Nutritional values of mealworms (Tenebrio molitor) averaged from:
 
-- Jensen, I.-J., et al. "Nutritional content and bioactive properties of wild and
-  farmed cod (Gadus morhua L.) subjected to food preparation."
-  Journal of Food Composition and Analysis 31.2 (2013): 212-216.
-- https://www.nutritionvalue.org/Fish%2C_raw%2C_Atlantic%2C_cod_nutritional_value.html
+- Jankauskienė, Agnė, et al. "Nutritional composition and safety parameters
+  of mealworms (Tenebrio molitor) reared on substrates derived from by-products."
+  Applied Sciences 14.7 (2024): 2744.
+- Zhang, Guoqiang, et al. "Nutritional value and advances of mealworm (Tenebrio molitor)
+  as a sustainable functional ingredient in bakery products: A key step toward sustainable diets."
+  Future Foods 12 (2025): 100716.
 
-
-
-Basis: 100 g raw Atlantic cod, wet weight.
-
+Basis: 100 g dry matter of whole larvae. No source reports residual
+moisture for the pooled material, so water is not given.
 
 Units:
     proteins, fats, carbs, water : g / 100 g
     ashes, vitamins, others      : mg / 100 g
-
-
-Notes:
-    - NutritionValue values were converted from an 85 g serving to 100 g before
-      averaging with Jensen et al.
-    - NutritionValue reports cystine rather than cysteine. The cystine value
-      was converted using 1 g cystine = 1.0084 g cysteine before averaging.
 """
 
 TABLE = {
@@ -115,4 +107,5 @@ TABLE = {
         "quercetin_3_o_glucoside": 0.400000,
         "rutin": 0.400000,
     },
+    "water": 0.000000
 }
