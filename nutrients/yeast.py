@@ -78,7 +78,8 @@ TABLE = {
         "calcium": 189.9,
         "mercury": 0.004,
         "phosphorus": 1115.1,
-        "others": 4042.2,
+        "sodium": 70.74,
+        "others": 3971.46,
     },
     "carbs": {
         "fibers": {
@@ -99,8 +100,6 @@ TABLE = {
         "vitamin_b9_folate": 4.1,
         "vitamin_b12_cobalamin": 0.044,
     },
-    "others": {
-        "salt": 180.0,
-    },
+    "others": {},
     "water": 6.2,
 }

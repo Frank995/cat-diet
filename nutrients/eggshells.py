@@ -53,6 +53,7 @@ TABLE = {
         },
         "others": 0.000000,
     },
+    "vitamins": {},
     "others": {},
     "water": 0.000000,
 }

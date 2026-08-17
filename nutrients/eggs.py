@@ -17,11 +17,9 @@ TABLE = {
     "proteins": {
         "alanine": 0.651726,
         "arginine": 0.571495,
-        "asparagine": 0.407333,
         "aspartic_acid": 1.31356,
         "cysteine": 0.316411,
         "glutamic_acid": 1.72276,
-        "glutamine": 0.349000,
         "glycine": 0.437913,
         "histidine": 0.255911,
         "isoleucine": 0.662486,
