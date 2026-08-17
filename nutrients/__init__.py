@@ -8,6 +8,7 @@ from .eggshells import TABLE as EGGSHELLS_TABLE
 from .mealworms import TABLE as MEALWORMS_TABLE
 from .mussels import TABLE as MUSSELS_TABLE
 from .spirulina import TABLE as SPIRULINA_TABLE
+from .sunflower_oil import TABLE as SUNFLOWER_OIL_TABLE
 from .yeast import TABLE as YEAST_TABLE
 
 __all__ = [
@@ -21,5 +22,6 @@ __all__ = [
     "MEALWORMS_TABLE",
     "MUSSELS_TABLE",
     "SPIRULINA_TABLE",
+    "SUNFLOWER_OIL_TABLE",
     "YEAST_TABLE",
 ]

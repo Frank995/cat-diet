@@ -11,29 +11,6 @@ Basis: 100 g whole egg (yolk + white recombined), wet weight.
 Units:
     proteins, fats, carbs, water : g / 100 g
     ashes, vitamins, others      : mg / 100 g
-
-Notes:
-- The source's "non protein nitrogen (difference)" residual is mapped to
-  proteins.others.
-- Mineral values were reported in g / 100 g by the underlying sources and
-  have been converted to mg / 100 g for consistency with the other files.
-  ashes.others is the residual of total ash after the identified minerals.
-- Fatty acid naming: the C16:1 n-7 isomer is the true palmitoleic acid
-  (0.321041 g); the second C16:1 isomer (n-9) has no established trivial
-  name and is kept as hexadecenoic_acid_C16_1_n9. C17:1 is kept as
-  heptadecenoic acid, and C22:5 n-3 (reported as clupanodonic acid) is
-  normalized to docosapentaenoic_acid_C22_5_n3. Conjugated C18:2 is kept
-  as a single conjugated_linoleic_acid_C18_2 entry. C20:2 is reported
-  without an omega family. Stearidonic and punicic acid were zero and are
-  omitted.
-- Sugars are reported individually, so they are kept as a sugars
-  sub-dictionary of carbs, parallel to fibers; carbs.others is the
-  remaining non-sugar, non-fiber carbohydrate. Fiber is zero.
-- Vitamin A: the RAE figure is dropped and the individual provitamin A
-  forms (retinol, alpha- and beta-carotene, beta-cryptoxanthin) are kept
-  instead. Lutein + zeaxanthin are not provitamin A and are listed under
-  others. Vitamin C, lycopene, beta/delta/gamma-tocotrienol and
-  dihydrophylloquinone were zero and are omitted.
 """
 
 TABLE = {
@@ -73,6 +50,7 @@ TABLE = {
             "arachidic_acid_C20_0": 0.00452098,
             "behenic_acid_C22_0": 0.0117647,
             "lignoceric_acid_C24_0": 0.00392157,
+            "others": 0.000000,
         },
         "monounsaturated": {
             "myristoleic_acid_C14_1_n5": 0.00736000,
@@ -83,6 +61,7 @@ TABLE = {
             "vaccenic_acid_C18_1_n7": 0.303535,
             "eicosenoic_acid_C20_1": 0.0204629,
             "erucic_acid_C22_1_n9": 0.00392157,
+            "others": 0.000000,
         },
         "polyunsaturated": {
             "linoleic_acid_C18_2_n6": 1.23586,
@@ -96,6 +75,7 @@ TABLE = {
             "adrenic_acid_C22_4_n6": 0.00920000,
             "docosapentaenoic_acid_C22_5_n3": 0.00759000,
             "docosahexaenoic_acid_C22_6_n3": 0.0313937,
+            "others": 0.000000,
         },
         "others": 0.102328,
     },

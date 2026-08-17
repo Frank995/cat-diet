@@ -1,80 +1,70 @@
-"""Nutritional values of wild cod averaged from:
+"""
+Nutritional values of wild Atlantic cod (Gadus morhua) based on:
 
-Jensen, Ida-Johanne, et al. "Nutritional content and bioactive properties of wild and farmed cod (Gadus morhua L.) subjected to food preparation." Journal of Food Composition and Analysis 31.2 (2013): 212-216.
-https://www.nutritionvalue.org (wild raw cod)
 
-Basis: 100 g raw Atlantic cod, wet weight. The NutritionValue entry was
-normalized from an 85 g serving to 100 g; the Jensen et al. values were
-already reported per wet fillet mass.
-Energy: 82.3529 kcal / 100 g.
+- Jensen, I.-J., et al. "Nutritional content and bioactive properties of wild and
+  farmed cod (Gadus morhua L.) subjected to food preparation."
+  Journal of Food Composition and Analysis 31.2 (2013): 212-216.
+- https://www.nutritionvalue.org/Fish%2C_raw%2C_Atlantic%2C_cod_nutritional_value.html
+
+Basis: 100 g raw Atlantic cod, wet weight.
 
 Units:
     proteins, fats, carbs, water : g / 100 g
     ashes, vitamins, others      : mg / 100 g
 
 Notes:
-- The two sources report the sulphur amino acids differently (Jensen:
-  cysteine; NutritionValue: cysteine). Both are retained as reported, since
-  together with the other amino acids and proteins.others they reconcile
-  exactly with the averaged total protein (17.4809 g).
-- Fatty acids reported as zero (C4:0-C12:0) are omitted. fats.others
-  (0.371176 g) is the unresolved remainder of total fat (0.810294 g).
-- C18:1, C18:2, C18:3, C18:4 and C20:4 are reported by the source as
-  positional-isomer sums without an omega family, so the IUPAC-style names
-  are kept.
-- ashes.others is total ash (1232.35 mg) minus the sum of the identified
-  minerals.
-- Vitamin A is entirely retinol (all carotenoids zero). Folate is reported
-  identically as DFE and food folate with zero folic acid, so a single
-  vitamin_b9_folate key is kept. Vitamin D is entirely D3 and vitamin E
-  entirely alpha-tocopherol; vitamin K is entirely K1.
-- Carbohydrate and fiber (including chitin) are reported as zero.
+    - NutritionValue reports cystine rather than cysteine. The cystine value
+      was converted using 1 g cystine = 1.0084 g cysteine before averaging.
 """
 
 TABLE = {
     "proteins": {
-        "alanine": 1.11574,
-        "arginine": 1.11794,
-        "aspartic_acid": 1.59926,
-        "cysteine": 0.285588,
-        "glutamic_acid": 2.79632,
-        "glycine": 0.857647,
-        "histidine": 0.434265,
-        "isoleucine": 0.770588,
-        "leucine": 1.47853,
-        "lysine": 1.67265,
-        "methionine": 0.561029,
-        "phenylalanine": 0.717647,
-        "proline": 0.627206,
-        "serine": 0.787941,
-        "threonine": 0.800588,
-        "tryptophan": 0.198824,
-        "tyrosine": 0.635588,
-        "valine": 0.863235,
-        "others": 0.160294,
+        "alanine": 1.038235294,
+        "arginine": 1.097941176,
+        "aspartic_acid": 1.531764706,
+        "cysteine": 0.151094588,
+        "glutamic_acid": 2.723823529,
+        "glycine": 0.797647059,
+        "histidine": 0.416764706,
+        "isoleucine": 0.740588235,
+        "leucine": 1.423529412,
+        "lysine": 1.617647059,
+        "methionine": 0.533529412,
+        "phenylalanine": 0.672647059,
+        "proline": 0.604705882,
+        "serine": 0.742941176,
+        "threonine": 0.760588235,
+        "tryptophan": 0.198823529,
+        "tyrosine": 0.610588235,
+        "valine": 0.833235294,
+        "others": 0.188235294,
     },
     "fats": {
         "saturated": {
-            "myristic_acid_C14_0": 0.00970588,
-            "palmitic_acid_C16_0": 0.0902941,
-            "stearic_acid_C18_0": 0.0272059,
+            "myristic_acid_C14_0": 0.009411765,
+            "palmitic_acid_C16_0": 0.090588235,
+            "stearic_acid_C18_0": 0.029411765,
+            "others": 0.001176471,
         },
         "monounsaturated": {
-            "palmitoleic_acid_C16_1_n7": 0.0132353,
-            "octadecenoic_acid_C18_1": 0.0530882,
-            "eicosenoic_acid_C20_1": 0.0152941,
-            "docosenoic_acid_C22_1": 0.00676471,
+            "palmitoleic_acid_C16_1_n7": 0.016470588,
+            "octadecenoic_acid_C18_1": 0.061176471,
+            "eicosenoic_acid_C20_1": 0.015294118,
+            "docosenoic_acid_C22_1": 0.003529412,
+            "others": 0.000000000,
         },
         "polyunsaturated": {
-            "octadecadienoic_acid_C18_2": 0.00985294,
-            "octadecatrienoic_acid_C18_3": 0.00117647,
-            "octadecatetraenoic_acid_C18_4": 0.00558824,
-            "eicosatetraenoic_acid_C20_4": 0.0223529,
-            "eicosapentaenoic_acid_C20_5_n3": 0.0592647,
-            "docosapentaenoic_acid_C22_5_n3": 0.00779412,
-            "docosahexaenoic_acid_C22_6_n3": 0.117500,
+            "octadecadienoic_acid_C18_2": 0.004705882,
+            "octadecatrienoic_acid_C18_3": 0.001176471,
+            "octadecatetraenoic_acid_C18_4": 0.001176471,
+            "eicosatetraenoic_acid_C20_4": 0.022352941,
+            "eicosapentaenoic_acid_C20_5_n3": 0.063529412,
+            "docosapentaenoic_acid_C22_5_n3": 0.010588235,
+            "docosahexaenoic_acid_C22_6_n3": 0.120000000,
+            "others": 0.008235294,
         },
-        "others": 0.371176,
+        "others": 0.215294118,
     },
     "ashes": {
         "calcium": 16.0000,
@@ -87,7 +77,7 @@ TABLE = {
         "selenium": 0.0331059,
         "sodium": 54.0000,
         "zinc": 0.447059,
-        "others": 513.455,
+        "others": 513.457482,
     },
     "carbs": {
         "fibers": {
@@ -112,9 +102,9 @@ TABLE = {
     },
     "others": {
         "cholesterol": 43.0000,
-        "taurine": 115.000,
-        "beta_alanine": 95.0000,
-        "1_methylhistidine": 115.000,
+        "taurine": 110.000,
+        "beta_alanine": 30.000,
+        "1_methylhistidine": 100.000,
     },
-    "water": 80.3368,
+    "water": 81.061765,
 }

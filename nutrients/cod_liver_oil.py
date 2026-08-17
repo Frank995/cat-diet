@@ -1,30 +1,12 @@
 """Nutritional values of cod liver oil from:
 
-https://www.nutritionvalue.org (cod liver oil)
+- https://www.nutritionvalue.org/Fish_oil%2C_cod_liver_nutritional_value.html
 
 Basis: 100 g oil, normalized from the source's 4.5 g serving.
-Energy: 911.111 kcal / 100 g.
 
 Units:
     proteins, fats, carbs, water : g / 100 g
     ashes, vitamins, others      : mg / 100 g
-
-Notes:
-- The source gives 4.500 g fat in a 4.5 g serving, i.e. 100 g fat / 100 g
-  after normalization, but its fatty-acid subclasses sum to only 4.133 g
-  per serving. The reported total fat is preserved and the remaining
-  0.367 g/serving (8.15556 g/100 g) is assigned to fats.others rather than
-  forcing the fatty acids to equal total fat.
-- Protein, carbohydrate, fiber, ash, water and all minerals are explicitly
-  reported as zero and are retained as zeros rather than treated as missing.
-- Vitamin A (1350 ug / 4.5 g = 30.0 mg / 100 g) is entirely retinol;
-  vitamin D converts to 0.250000 mg / 100 g. All other reported vitamins
-  are zero and are omitted.
-- C18:1, C18:2, C18:3, C18:4 and C20:4 are reported as positional-isomer
-  sums without an omega family, so the IUPAC-style names are kept.
-- The source contains an unexplained, unnamed "0.85 g" row immediately
-  after net carbohydrates; it has no nutrient name and an undefined unit,
-  so it was not assigned to any field.
 """
 
 TABLE = {
@@ -36,12 +18,14 @@ TABLE = {
             "myristic_acid_C14_0": 3.57778,
             "palmitic_acid_C16_0": 10.6222,
             "stearic_acid_C18_0": 2.80000,
+            "others": 5.60000,
         },
         "monounsaturated": {
             "palmitoleic_acid_C16_1_n7": 8.31111,
             "octadecenoic_acid_C18_1": 20.6444,
             "eicosenoic_acid_C20_1": 10.4222,
             "docosenoic_acid_C22_1": 7.33333,
+            "others": 0.000000,
         },
         "polyunsaturated": {
             "octadecadienoic_acid_C18_2": 0.933333,
@@ -51,6 +35,7 @@ TABLE = {
             "eicosapentaenoic_acid_C20_5_n3": 6.88889,
             "docosapentaenoic_acid_C22_5_n3": 0.933333,
             "docosahexaenoic_acid_C22_6_n3": 10.9778,
+            "others": 0.000000,
         },
         "others": 8.15556,
     },

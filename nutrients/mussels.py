@@ -1,30 +1,13 @@
 """Nutritional values of raw blue mussels from:
 
-https://www.nutritionvalue.org (blue mussels)
+https://www.nutritionvalue.org/Mollusks%2C_raw%2C_blue%2C_mussel_nutritional_value.html
 
 Basis: 100 g raw blue mussel, wet weight, normalized from the source's
 150 g serving (factor 0.666667).
-Energy: 86.0000 kcal / 100 g.
 
 Units:
     proteins, fats, carbs, water : g / 100 g
     ashes, vitamins, others      : mg / 100 g
-
-Notes:
-- The amino acids plus proteins.others reconcile exactly with the reported
-  total protein (11.9 g). The sulphur amino acid is reported as cysteine.
-- Fatty acids reported as zero (C4:0-C12:0) are omitted. fats.others
-  (0.713 g) is the unresolved remainder of total fat (2.24 g).
-- C18:1, C18:2, C18:3, C18:4, C20:1, C20:4 and C22:1 are reported as
-  positional-isomer sums without an omega family, so the IUPAC-style names
-  are kept.
-- ashes.others is total ash (1586.67 mg) minus the sum of the identified
-  minerals.
-- Vitamin A is entirely retinol (all carotenoids zero). Folate is reported
-  identically as DFE and food folate with zero folic acid, so a single
-  vitamin_b9_folate key is kept. Vitamin K is entirely K1; vitamin D and
-  all tocotrienols are zero and are omitted.
-- Total carbohydrate (3.69333 g) is entirely non-fiber (fiber reported 0).
 """
 
 TABLE = {
@@ -54,12 +37,14 @@ TABLE = {
             "myristic_acid_C14_0": 0.0586667,
             "palmitic_acid_C16_0": 0.294000,
             "stearic_acid_C18_0": 0.068000,
+            "others": 0.004000,
         },
         "monounsaturated": {
             "palmitoleic_acid_C16_1_n7": 0.138000,
             "octadecenoic_acid_C18_1": 0.204667,
             "eicosenoic_acid_C20_1": 0.138000,
             "docosenoic_acid_C22_1": 0.026000,
+            "others": 0.000000,
         },
         "polyunsaturated": {
             "octadecadienoic_acid_C18_2": 0.018000,
@@ -69,8 +54,9 @@ TABLE = {
             "eicosapentaenoic_acid_C20_5_n3": 0.188000,
             "docosapentaenoic_acid_C22_5_n3": 0.0220000,
             "docosahexaenoic_acid_C22_6_n3": 0.253333,
+            "others": 0.000000,
         },
-        "others": 0.713000,
+        "others": 0.702667,
     },
     "ashes": {
         "calcium": 26.0000,
