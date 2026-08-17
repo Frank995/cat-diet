@@ -19,6 +19,12 @@ TABLE = {
         "others": 0.496032,
     },
     "fats": {
+        "saturated": {
+            "others": 0.000000,
+        },
+        "monounsaturated": {
+            "others": 0.000000,
+        },
         "polyunsaturated": {
             "eicosapentaenoic_acid_C20_5_n3": 11.4087,
             "docosapentaenoic_acid_C22_5_n3": 2.28175,

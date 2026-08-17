@@ -43,6 +43,7 @@ TABLE = {
         "selenium": 0.105000,
         "sodium": 101.000,
         "zinc": 4.50000,
+        "others": 0.000000,
     },
     "carbs": {
         "fibers": {
