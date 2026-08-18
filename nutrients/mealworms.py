@@ -107,5 +107,5 @@ TABLE = {
         "quercetin_3_o_glucoside": 0.400000,
         "rutin": 0.400000,
     },
-    "water": 0.000000
+    "water": 0.000000,
 }

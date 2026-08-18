@@ -23,6 +23,10 @@ All tables share one shape and one set of units:
 Because every section reconciles with its own total through its "others"
 residual, every aggregate (total protein, total fat, total ash, ...) is simply
 the sum of the leaves of that section - no stored totals, no drift.
+
+Leaves may be `None` (meaning "not measured / not yet filled in"); every
+helper here treats `None` as `0.0` when doing arithmetic, and preserves `None`
+where a table is only being reshaped (sorted) rather than computed on.
 """
 
 from __future__ import annotations
@@ -72,6 +76,8 @@ def smart_round(value: float, sig: int = 6) -> float:
     round(0.000117647, 4) == 0.0001 loses the vitamin K1 content entirely;
     smart_round(0.000117647) == 0.000117647.
     """
+    if value is None:
+        return None
     if not isinstance(value, Number) or isinstance(value, bool):
         return value
     if value == 0 or not math.isfinite(value):
@@ -79,13 +85,29 @@ def smart_round(value: float, sig: int = 6) -> float:
     return float(f"{value:.{sig}g}")
 
 
+def _is_number(node: Any) -> bool:
+    return isinstance(node, Number) and not isinstance(node, bool)
+
+
 def _map_leaves(
-    node: Any, fn: Callable[[float, tuple], float], path: tuple = ()
+    node: Any,
+    fn: Callable[[float, tuple], float],
+    path: tuple = (),
+    skip_none: bool = True,
 ) -> Any:
-    """Recursively rebuild `node`, applying `fn(value, path)` to every number."""
+    """Recursively rebuild `node`, applying `fn(value, path)` to every number.
+
+    If `skip_none` (default), `None` leaves pass through untouched instead of
+    being fed to `fn`; this lets templates with unfilled ("null") nutrients
+    flow through `scale`/`round_table` without crashing or turning into 0.
+    """
     if isinstance(node, Mapping):
-        return {k: _map_leaves(v, fn, path + (k,)) for k, v in node.items()}
-    if isinstance(node, Number) and not isinstance(node, bool):
+        return {k: _map_leaves(v, fn, path + (k,), skip_none) for k, v in node.items()}
+    if node is None:
+        if skip_none:
+            return None
+        node = 0.0
+    if _is_number(node):
         return fn(float(node), path)
     raise TypeError(f"Unsupported value at {'.'.join(path) or '<root>'}: {node!r}")
 
@@ -93,16 +115,21 @@ def _map_leaves(
 def _sum_leaves(node: Any) -> float:
     if isinstance(node, Mapping):
         return sum(_sum_leaves(v) for v in node.values())
+    if node is None:
+        return 0.0
     return float(node)
 
 
 def round_table(table: Mapping, sig: int = 6) -> dict:
-    """Significant-digit rounding of every number in a table."""
+    """Significant-digit rounding of every number in a table. `None`s survive."""
     return _map_leaves(table, lambda v, _p: smart_round(v, sig))
 
 
 def scale(table: Mapping, factor: float, sig: int | None = 6) -> dict:
-    """Multiply every value by `factor` (e.g. 0.5 for half a portion)."""
+    """Multiply every value by `factor` (e.g. 0.5 for half a portion).
+
+    Unfilled (`None`) leaves stay `None`: scaling "unknown" still gives "unknown".
+    """
     out = _map_leaves(table, lambda v, _p: v * factor)
     return round_table(out, sig) if sig else out
 
@@ -116,28 +143,39 @@ def scale_to_grams(table: Mapping, grams: float, sig: int | None = 6) -> dict:
 # combining
 # --------------------------------------------------------------------------- #
 def combine_nutrition(*tables: Mapping, sig: int | None = 6) -> dict:
-    """Sum any number of nutrient profiles, key by key. Missing keys count as 0.
+    """Sum any number of nutrient profiles, key by key. Missing/None keys count as 0.
 
     The inputs must already be expressed on the same basis: scale each food
     with `scale_to_grams` first, otherwise you are adding percentages.
 
     Note: a section missing from one table (e.g. `water` for the dry-matter
-    insect tables) is simply taken from the tables that do have it.
+    insect tables) is simply taken from the tables that do have it. A `None`
+    ("not measured") leaf is treated as 0 as soon as it is combined with any
+    other table, since at that point the combined total is a real quantity.
     """
     if not tables:
         return {}
 
     def merge(a: Any, b: Any, path: tuple = ()) -> Any:
-        if a is None:
-            return copy.deepcopy(b)
-        if b is None:
-            return copy.deepcopy(a)
-        if isinstance(a, Mapping) and isinstance(b, Mapping):
+        if isinstance(a, Mapping) or isinstance(b, Mapping):
+            if a is None:
+                a = {}
+            if b is None:
+                b = {}
+            if not isinstance(a, Mapping) or not isinstance(b, Mapping):
+                raise TypeError(
+                    f"Cannot merge '{'.'.join(path) or '<root>'}': "
+                    f"incompatible types {type(a).__name__} and {type(b).__name__}."
+                )
             return {
                 key: merge(a.get(key), b.get(key), path + (key,))
                 for key in list(a) + [k for k in b if k not in a]  # stable order
             }
-        if isinstance(a, Number) and isinstance(b, Number):
+        if a is None and b is None:
+            return None
+        a = 0.0 if a is None else a
+        b = 0.0 if b is None else b
+        if _is_number(a) and _is_number(b):
             return float(a) + float(b)
         raise TypeError(
             f"Cannot merge '{'.'.join(path) or '<root>'}': "
@@ -154,14 +192,19 @@ def combine_nutrition(*tables: Mapping, sig: int | None = 6) -> dict:
 # summaries
 # --------------------------------------------------------------------------- #
 def summary(table: Mapping, sig: int = 6) -> dict:
-    """Proximate summary in grams, recomputed from the leaves (unit-aware)."""
+    """Proximate summary in grams, recomputed from the leaves (unit-aware).
+
+    `None` leaves (unmeasured nutrients) are treated as 0 for the purpose of
+    these aggregates.
+    """
     proteins = _sum_leaves(table.get("proteins", {}))
     fats = _sum_leaves(table.get("fats", {}))
     carbs_all = _sum_leaves(table.get("carbs", {}))
     fibers = _sum_leaves(table.get("carbs", {}).get("fibers", {}))
     sugars = _sum_leaves(table.get("carbs", {}).get("sugars", {}))
     ashes = _sum_leaves(table.get("ashes", {})) / MG_PER_G
-    water = float(table.get("water", 0.0))
+    water = table.get("water", 0.0)
+    water = 0.0 if water is None else float(water)
 
     out = {
         "proteins": proteins,
@@ -218,22 +261,22 @@ VITAMIN_TIERS = {
     "vitamin_a_alpha_carotene": "low",
     "vitamin_a_beta_carotene": "low",
     "vitamin_a_beta_cryptoxanthin": "low",
-    "vitamin_b1_thiamin": "moderate",
-    "vitamin_b2_riboflavin": "low",
-    "vitamin_b3_niacin": "low",
-    "vitamin_b5_pantothenic_acid": "low",
-    "vitamin_b6_pyridoxine": "moderate",
-    "vitamin_b9_folate": "high",
-    "vitamin_b12_cobalamin": "moderate",
-    "vitamin_c_ascorbic_acid": "high",
-    "vitamin_d3_cholecalciferol": "low",
+    "vitamin_b1": "moderate",
+    "vitamin_b2": "low",
+    "vitamin_b3": "low",
+    "vitamin_b5": "low",
+    "vitamin_b6": "moderate",
+    "vitamin_b7_biotin": "low",
+    "vitamin_b9": "high",
+    "vitamin_b12": "moderate",
+    "vitamin_c": "high",
+    "vitamin_d3": "low",
     "vitamin_e_alpha_tocopherol": "moderate",
     "vitamin_e_beta_tocopherol": "moderate",
     "vitamin_e_gamma_tocopherol": "moderate",
     "vitamin_e_delta_tocopherol": "moderate",
     "vitamin_e_alpha_tocotrienol": "moderate",
-    "vitamin_j_choline": "low",
-    "vitamin_k1_phylloquinone": "minimal",
+    "vitamin_k1": "minimal",
 }
 
 OTHERS_TIERS = {
@@ -242,13 +285,15 @@ OTHERS_TIERS = {
     "beta_alanine": "low",
     "1_methylhistidine": "low",
     "betaine": "low",
+    "choline": "low",
     "total_nitrogen": "minimal",
     "ammonia_nitrogen": "low",
-    # lipids / lipid-soluble
+    # lipids / lipid-soluble / pigments
     "cholesterol": "minimal",
     "squalene": "moderate",
-    "total_carotenoids": "moderate",
+    "chlorophyll_a": "high",
     "lutein_zeaxanthin": "moderate",
+    "phycocyanin": "high",
     # phenolics and flavonoids
     "apigenin": "moderate",
     "caffeic_acid": "moderate",
@@ -261,7 +306,7 @@ OTHERS_TIERS = {
     "rutin": "moderate",
     "sinapic_acid": "moderate",
     "vanillic_acid": "moderate",
-    "2_5_dihydroxybenzoic_acid": "moderate",
+    "gentisic_acid": "moderate",
 }
 
 #: matches the standardized fatty-acid suffix, e.g. "..._C22_6_n3"
@@ -295,7 +340,8 @@ def apply_cooking_degradation(
         sig: significant digits kept in the output.
 
     Unlike the previous version, this walks the whole structure, so no section
-    can be silently skipped, and every fallback is reported.
+    can be silently skipped, and every fallback is reported. `None` leaves
+    (unmeasured nutrients) are left untouched.
     """
     unknown: list[str] = []
 
@@ -347,7 +393,9 @@ def apply_cooking_degradation(
     cooked: dict[str, Any] = {}
     for section, value in table.items():
         if section == "water":
-            cooked["water"] = float(value) * (1.0 - water_loss_rate)
+            cooked["water"] = (
+                None if value is None else float(value) * (1.0 - water_loss_rate)
+            )
         elif section in resolvers:
             resolver = resolvers[section]
             cooked[section] = _map_leaves(value, lambda v, p, r=resolver: v * r(p))
@@ -395,8 +443,15 @@ def sort_nested_dict(
     return {k: processed[k] for k in keys}
 
 
+# --------------------------------------------------------------------------- #
+# validation
+# --------------------------------------------------------------------------- #
 def validate_table(table: Mapping, name: str = "<table>") -> list[str]:
-    """Cheap structural sanity check; returns a list of human-readable problems."""
+    """Cheap structural sanity check; returns a list of human-readable problems.
+
+    `None` leaves are accepted (they mean "not measured yet") and are simply
+    skipped by the numeric checks.
+    """
     problems: list[str] = []
     allowed_top = set(GRAM_SECTIONS) | set(MILLIGRAM_SECTIONS) | {"water"}
     stale = re.compile(r"(total|_g_per_100g|_mg_per_100g|^nfe$|^difference$|_mg$)")
@@ -405,10 +460,15 @@ def validate_table(table: Mapping, name: str = "<table>") -> list[str]:
         if key not in allowed_top:
             problems.append(f"{name}: unexpected top-level section '{key}'")
 
-    if "fats" in table:
+    if "fats" in table and isinstance(table["fats"], Mapping):
         for key in table["fats"]:
             if key not in ("saturated", "monounsaturated", "polyunsaturated", "others"):
                 problems.append(f"{name}: unexpected fats subclass '{key}'")
+
+    if "carbs" in table and isinstance(table["carbs"], Mapping):
+        for key in table["carbs"]:
+            if key not in ("sugars", "fibers", "others"):
+                problems.append(f"{name}: unexpected carbs subclass '{key}'")
 
     def walk(node: Any, path: tuple) -> None:
         if isinstance(node, Mapping):
@@ -418,7 +478,9 @@ def validate_table(table: Mapping, name: str = "<table>") -> list[str]:
                         f"{name}: leftover total/unit key '{'.'.join(path + (k,))}'"
                     )
                 walk(v, path + (k,))
-        elif isinstance(node, Number) and not isinstance(node, bool):
+        elif node is None:
+            return  # unmeasured leaf, not an error
+        elif _is_number(node):
             if node < 0:
                 problems.append(f"{name}: negative value at '{'.'.join(path)}'")
         else:
@@ -426,7 +488,7 @@ def validate_table(table: Mapping, name: str = "<table>") -> list[str]:
 
     walk(table, ())
 
-    if "water" in table:
+    if "water" in table and table["water"] is not None:
         s = summary(table, sig=12)
         if s["weight"] > 105 or s["weight"] < 90:
             problems.append(

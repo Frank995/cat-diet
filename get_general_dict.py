@@ -2,9 +2,11 @@ import json
 
 from nutrients import *
 
+
 def keys_view(d):
     """Return a nested dict with the same keys, all leaf values replaced by None."""
     return {k: keys_view(v) if isinstance(v, dict) else None for k, v in d.items()}
+
 
 def merge_views(a, b):
     """
@@ -29,6 +31,7 @@ def merge_views(a, b):
         else:
             merged[k] = b[k]
     return merged
+
 
 if __name__ == "__main__":
     output = {}
