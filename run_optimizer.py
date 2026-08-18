@@ -1064,7 +1064,7 @@ FOOD_SPECS = [
         mass_from_table=False,
         hi=3.0,
     ),
-    Food("yeast", "nutritional yeast", "YEAST_TABLE", "raw", hi=5.0),
+    Food("yeast", "nutritional yeast", "YEAST_TABLE", "raw", hi=6.0),
     Food("spirulina", "spirulina powder", "SPIRULINA_TABLE", "raw", hi=2.0),
     Food(
         "cod_liver_oil",
@@ -1082,7 +1082,7 @@ FOOD_SPECS = [
         marine_oil=True,
         hi=1.5,
     ),
-    Food("sunflower_oil", "sunflower oil", "SUNFLOWER_OIL_TABLE", "raw", hi=2.0),
+    Food("sunflower_oil", "sunflower oil", "SUNFLOWER_OIL_TABLE", "raw", hi=4.0),
 ]
 
 DOUGH_FLOUR_KEYS = ("bsfl", "mealworms")
@@ -1115,30 +1115,7 @@ PREMIX: list[Premix] = [
     Premix(
         "salt", "table salt (NaCl)", {"sodium": 393.4, "chloride": 606.6}, 1.0, 0.20
     ),
-    Premix(
-        "kcl", "potassium chloride", {"potassium": 524.4, "chloride": 475.6}, 3.0, 0.20
-    ),
     Premix("taurine", "taurine (pure)", {"taurine": 1000.0}, 0.60, 0.10),
-    Premix("zn", "zinc gluconate (14.3 % Zn)", {"zinc": 143.0}, 0.30, 0.25),
-    Premix("fe", "iron bisglycinate (20 % Fe)", {"iron": 200.0}, 0.15, 0.25),
-    Premix("cu", "copper gluconate (14 % Cu)", {"copper": 140.0}, 0.05, 0.35),
-    Premix("mn", "manganese gluconate (11.4 % Mn)", {"manganese": 114.0}, 0.05, 0.30),
-    Premix(
-        "i",
-        "potassium iodide (76.5 % I)",
-        {"iodine": 765.0, "potassium": 234.0},
-        0.002,
-        0.35,
-    ),
-    Premix(
-        "se",
-        "sodium selenite (45.6 % Se, inorganic)",
-        {"selenium": 456.0, "sodium": 266.0},
-        0.0004,
-        0.40,
-    ),
-    Premix("mg", "magnesium bisglycinate (14 % Mg)", {"magnesium": 140.0}, 0.40, 0.35),
-    Premix("chol", "choline bitartrate (41 % choline)", {"choline": 410.0}, 1.50, 0.15),
     # 1 mg dl-alpha-tocopheryl acetate = 1 IU exactly (Table VII-14).
     Premix(
         "vit_e",
@@ -1147,39 +1124,6 @@ PREMIX: list[Premix] = [
         0.05,
         0.20,
     ),
-    Premix("k1", "vitamin K1 (phytomenadione)", {"vitamin_k1": 1000.0}, 0.002, 0.30),
-    Premix(
-        "b1", "thiamine HCl (0.79 mg thiamine/mg)", {"vitamin_b1": 790.0}, 0.02, 0.15
-    ),
-    Premix("b2", "riboflavin", {"vitamin_b2": 1000.0}, 0.02, 0.15),
-    Premix(
-        "b3", "nicotinamide (1 mg = 1 mg niacin)", {"vitamin_b3": 1000.0}, 0.05, 0.15
-    ),
-    Premix(
-        "b5", "calcium D-pantothenate (0.92 mg/mg)", {"vitamin_b5": 920.0}, 0.02, 0.15
-    ),
-    Premix(
-        "b6",
-        "pyridoxine HCl (0.82 mg pyridoxine/mg)",
-        {"vitamin_b6": 820.0},
-        0.02,
-        0.15,
-    ),
-    Premix("b8", "biotin", {"vitamin_b8": 1000.0}, 0.002, 0.15),
-    Premix("b9", "folic acid", {"vitamin_b9": 1000.0}, 0.005, 0.15),
-    Premix("b12", "cyanocobalamin", {"vitamin_b12": 1000.0}, 0.002, 0.15),
-    Premix(
-        "met",
-        "DL-methionine",
-        {"methionine": 1000.0, "methionine_cystine": 1000.0},
-        1.0,
-        0.35,
-    ),
-    # NOTE: deliberately NO vitamin A and NO vitamin D3 premix.
-    #   - cod liver oil covers both;
-    #   - stacking retinol on cod liver oil is the classic home-diet accident;
-    #   - adding D3 as an additive activates the LEGAL cap of 227 IU/100 g DM
-    #     (instead of the 7 500 IU/1000 kcal nutritional maximum).
 ]
 for _p in PREMIX:
     for _k in _p.contents:
