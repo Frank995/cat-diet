@@ -266,7 +266,7 @@ VITAMIN_TIERS = {
     "vitamin_b3": "low",
     "vitamin_b5": "low",
     "vitamin_b6": "moderate",
-    "vitamin_b7_biotin": "low",
+    "vitamin_b8": "low",
     "vitamin_b9": "high",
     "vitamin_b12": "moderate",
     "vitamin_c": "high",

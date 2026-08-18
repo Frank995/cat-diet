@@ -96,7 +96,7 @@ TABLE = {
         "vitamin_b3": 420.0,
         "vitamin_b5": 140.0,
         "vitamin_b6": 34.0,
-        "vitamin_b7_biotin": 0.196,
+        "vitamin_b8": 0.196,
         "vitamin_b9": 4.1,
         "vitamin_b12": 0.044,
     },
