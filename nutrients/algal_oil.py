@@ -26,9 +26,9 @@ TABLE = {
             "others": 0.000000,
         },
         "polyunsaturated": {
-            "eicosapentaenoic_acid_C20_5_n3": 11.4087,
-            "docosapentaenoic_acid_C22_5_n3": 2.28175,
-            "docosahexaenoic_acid_C22_6_n3": 22.9167,
+            "timnodonic_acid": 11.4087,
+            "osbond_acid": 2.28175,
+            "cervonic_acid": 22.9167,
             "others": 5.40665,
         },
         "others": 56.6965,
@@ -43,7 +43,7 @@ TABLE = {
         "others": 0.000000,
     },
     "vitamins": {
-        "vitamin_d3_cholecalciferol": 0.054348,
+        "vitamin_d3": 0.054348,
         "vitamin_e_alpha_tocopherol": 65.1065,
     },
     "others": {},
