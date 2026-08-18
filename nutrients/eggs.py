@@ -53,7 +53,7 @@ TABLE = {
         "monounsaturated": {
             "myristoleic_acid": 0.00736000,
             "palmitoleic_acid": 0.321041,
-            "palmitoleic_acid_n9": 0.0866300,
+            "hexadecenoic_acid_C16_1_n9": 0.0866300,
             "heptadecenoic_acid_C17_1_n7": 0.0119600,
             "oleic_acid": 3.74419,
             "vaccenic_acid": 0.303535,
@@ -102,7 +102,6 @@ TABLE = {
         "vitamin_a_alpha_carotene": 0.0126667,
         "vitamin_a_beta_carotene": 0.0293333,
         "vitamin_a_beta_cryptoxanthin": 0.0110000,
-        "vitamin_a_lutein_zeaxanthin": 0.364667,
         "vitamin_b1": 0.0608437,
         "vitamin_b2": 0.469400,
         "vitamin_b3": 0.0785502,
@@ -119,6 +118,7 @@ TABLE = {
         "vitamin_k1": 0.000196078,
     },
     "others": {
+        "lutein_zeaxanthin": 0.364667,
         "choline": 274.141,
         "cholesterol": 361.667,
         "betaine": 0.594177,

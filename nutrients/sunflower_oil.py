@@ -16,7 +16,7 @@ TABLE = {
     },
     "fats": {
         "saturated": {
-            "myristic acid": 0.0571429,
+            "myristic_acid": 0.0571429,
             "pentadecanoic_acid_C15_0": 0.800000,
             "palmitic_acid": 3.67857,
             "stearic_acid": 4.32143,
